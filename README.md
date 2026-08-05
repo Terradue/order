@@ -75,6 +75,10 @@ The main field describing the order status
 - `failed`: The provider is not able to deliver the order.
 - `canceled`: The order has been canceled.
 
+The State diagram below shows the item or asset `order:status` lifecycle.
+
+![Order Lifecycle](images/diagrams/order-lifecycle/order-lifecyle.svg)
+
 #### Ordering attempts
 
 `order:attempt_limit` and `order:attempt_number` support providers that allow an
