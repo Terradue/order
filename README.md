@@ -73,6 +73,37 @@ The main field describing the order status
 - `failed`: The provider is not able to deliver the order.
 - `canceled`: The order has been canceled.
 
+The State diagram below shows the item or asset `order:status` lifecycle.
+
+![Order Lifecycle](images/diagrams/order-lifecycle/order-lifecyle.svg)
+
+#### Ordering attempts
+
+`order:attempt_limit` and `order:attempt_number` support providers that allow an
+order to be retried. They are particularly useful when a failure is recoverable,
+for example after a temporary provider-side or upstream processing error.
+
+- `order:attempt_limit` is the maximum number of attempts that may be initiated
+  during the current ordering lifecycle. It is a positive integer.
+- `order:attempt_number` is the number of attempts already initiated, including
+  the current attempt when one is in progress. It is a non-negative integer and
+  SHOULD NOT exceed `order:attempt_limit`.
+- The two fields SHOULD be provided together so clients can determine whether
+  another attempt remains available.
+- Their retry semantics apply only while `order:status` is `orderable` or
+  `failed`, and while the resource has not expired. When the
+  [timestamps extension](https://github.com/stac-extensions/timestamps/) field
+  `expires` is present, the resource is not expired when the current instant is
+  before or equal to `expires`.
+- Once the status moves to another value, or the current instant is later than
+  `expires`, clients MUST NOT interpret these fields as permission to initiate
+  another attempt. Providers SHOULD remove the fields when they no longer
+  describe an active retry lifecycle.
+
+The attempt number is cumulative within one ordering lifecycle and is not reset
+after a failed attempt. A provider starts a new count only when it starts a new,
+independent ordering lifecycle.
+
 #### Timestamps
 
 The [timestamps extension](https://github.com/stac-extensions/timestamps/) and the fields

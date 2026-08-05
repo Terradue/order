@@ -1,0 +1,20 @@
+@startuml
+
+[*] --> orderable
+orderable --> ordered
+ordered --> pending
+pending --> shipping
+pending --> canceled
+pending --> failed
+
+shipping --> succeeded
+shipping --> canceled
+shipping --> failed
+
+succeeded --> [*]
+canceled --> [*]
+
+failed --> ordered : retry
+failed --> [*]
+
+@enduml
