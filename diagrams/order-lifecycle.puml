@@ -1,20 +1,22 @@
 @startuml
 
+left to right direction
+
 [*] --> orderable
-orderable --> ordered
-ordered --> pending
-pending --> shipping
-pending --> canceled
-pending --> failed
+orderable --> ordered : order
+ordered --> pending : process
+pending --> shipping : ship
+pending --> canceled : cancel
+pending --> failed : fail
 
-shipping --> succeeded
-shipping --> canceled
-shipping --> failed
-
-succeeded --> [*]
-canceled --> [*]
+shipping --> succeeded : succeed
+shipping --> canceled : cancel
+shipping --> failed : fail
 
 failed --> ordered : retry
+
 failed --> [*]
+succeeded --> [*]
+canceled --> [*]
 
 @enduml
