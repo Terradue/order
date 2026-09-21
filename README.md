@@ -75,7 +75,7 @@ The main field describing the order status
 
 The State diagram below shows the item or asset `order:status` lifecycle.
 
-![Order Lifecycle](images/diagrams/order-lifecycle/order-lifecyle.svg)
+![Order Lifecycle](images/diagrams/order-lifecycle/order-lifecycle.svg)
 
 #### Timestamps
 
